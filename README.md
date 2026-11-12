@@ -220,8 +220,4 @@ terraform apply -var-file="secrets.tfvars"
 # secrets.tfvars n'est pas commité — variables gérées via Azure DevOps pipeline
 ```
 
----
 
-## Licence
-
-MIT
