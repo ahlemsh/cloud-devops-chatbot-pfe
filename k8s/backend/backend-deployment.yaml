@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-backend
+  labels:
+    app: chatbot-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot-backend
+  template:
+    metadata:
+      labels:
+        app: chatbot-backend
+    spec:
+      imagePullSecrets:
+        - name: nexus-secret
+      containers:
+        - name: chatbot-backend
+          image: 10.0.1.4:31082/chatbot-backend:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://10.0.20.4:27017/chatbot"
+            - name: FLASK_API_URL
+              value: "http://10.0.4.4:5000/chat"
