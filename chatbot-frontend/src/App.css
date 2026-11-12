@@ -1,0 +1,563 @@
+/* Design Global - Mode Sombre */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #181818;
+  color: #EEEEEE;
+
+}
+
+/* Structure de l'application */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.burger-menu {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: #007BFF;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.burger-icon {
+  font-size: 20px;
+}
+
+/* Barre latérale */
+.sidebar {
+  position: relative;
+  overflow: hidden;
+  width: 280px;
+  background-color: #222831;
+  padding: 15px;
+  border-right: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .burger-menu {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    z-index: 999;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .chat-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: #222;
+    border-top: 1px solid #444;
+
+  }
+
+  .chat-box input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: white;
+  }
+
+  .chat-box button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .chat-box button:disabled {
+    background-color: #555;
+  }
+}
+
+.new-chat-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: #007BFF;
+
+  border: none;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.3s ease;
+}
+
+.new-chat-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Sections */
+.sidebar h3 {
+  margin-top: 15px;
+}
+
+/* Historique des sessions */
+.session-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.session-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.session-item:hover {
+  background-color: #333A45;
+}
+
+/* Icône Corbeille */
+.trash-icon {
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.trash-icon:hover {
+  color: red;
+}
+
+/* FAQ */
+.faq-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.faq-item {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background 0.3s ease, color 0.3s ease;
+  color: #BBBBBB;
+  cursor: pointer;
+}
+
+.faq-item:hover {
+  background-color: #444A53;
+  color: white;
+  transform: scale(1.02);
+}
+
+
+/* Section Contact */
+
+.contact-section {
+  margin-top: auto;
+  padding-top: 20px;
+  align-self: flex-start;
+}
+
+.contact-section h3 {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.contact-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 5px;
+  margin-top: 13px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-item:hover {
+  color: #007BFF;
+}
+
+.contact-item .icon {
+  font-size: 16px;
+}
+
+/* Zone de chat */
+.chat-container {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 4px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 4px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: white;
+}
+
+
+.chat-container {
+  scrollbar-width: thin;
+  scrollbar-color: white #1e1e1e;
+}
+
+/* Conteneur des messages */
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+}
+/* Style général des messages */
+.chat-message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  max-width: 60%;
+  /* ✅ Réduit la largeur des bulles */
+  word-wrap: break-word;
+}
+
+/* Messages du bot (à gauche) */
+.chat-message.bot {
+  align-self: flex-start;
+  text-align: left;
+  background-color: #333A45;
+  color: rgba(255, 255, 255, 0.845);
+  padding: 10px 15px;
+  border-radius: 12px;
+  border-top-left-radius: 5px;
+}
+
+/* Messages de l'utilisateur (à droite) */
+.chat-message.user {
+  align-self: flex-end;
+  text-align: right;
+  background-color: white;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 12px;
+  border-top-right-radius: 5px;
+}
+
+/* Réduction des bulles de messages */
+.chat-bubble {
+  padding: 8px 8px;
+  border-radius: 10px;
+  font-size: 15px;
+  max-width: 100%;
+  /* ✅ La bulle ne dépasse pas sa div parent */
+  word-wrap: break-word;
+}
+
+/* Avatar */
+.chat-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* Avatar du bot à gauche */
+.chat-message.bot .chat-avatar {
+  margin-right: 10px;
+}
+
+/* Avatar de l'utilisateur à droite */
+.chat-message.user .chat-avatar {
+  margin-left: 10px;
+  order: 2;
+  /* ✅ Permet de mettre l'avatar à droite */
+}
+@media (max-width: 455px) {
+  .chat-bubble {
+    max-width: 100%;
+  }
+}
+
+
+/* Zone d'entrée de texte */
+.chat-box {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding: 8px;
+  background: #181818;
+  border-top: 1px solid #333;
+}
+
+.chat-box input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #222;
+  color: white;
+}
+
+.chat-box button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-box button:disabled {
+  background-color: #555;
+}
+
+/* Effets sur les liens et icônes */
+.clickable {
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.clickable:hover {
+  opacity: 0.7;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .chat-message {
+    max-width: 90%;
+  }
+}
+
+.session-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.session-item:hover {
+  background-color: #333;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  transition: opacity 0.3s;
+}
+
+.menu-button:hover {
+  opacity: 0.7;
+}
+
+.menu-container {
+  position: relative;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #2b2b2b;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.menu-dropdown button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  text-align: left;
+  z-index: 100;
+}
+
+.menu-dropdown button:hover {
+  background: #444;
+}
+
+.menu-delete {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.3s;
+}
+
+.menu-delete:hover {
+  background: #444;
+}
+
+.menu-delete:hover,
+.menu-delete:hover .trash-icon {
+  color: red !important;
+
+}
+
+/* Logo */
+.logo {
+  width: 50px;
+  height: auto;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 10px;
+  margin-right: 10px;
+}
+
+/* Titre du chatbot */
+.chatbot-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0 10px 10px;
+  color: white;
+}
+
+.chat-container {
+  flex: 1;
+  transition: width 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  background: #121212;
+  color: white;
+  padding: 20px;
+}
+
+.chat-container.full-width {
+  width: 100%;
+}
+
+.chat-container.with-sidebar {
+  width: calc(100% - 280px);
+}
+
+.send-btn {
+  background-color: #007BFF;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.send-btn:hover {
+  background-color: #0056b3;
+}
+
+.send-btn svg {
+  font-size: 14px;
+}
+
+/* Conteneur de la liste des sessions avec un scrollbar */
+.session-list {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: white transparent;
+  padding-right: 5px;
+  position: relative;
+  /* Ensure the dropdown doesn't affect the height */
+}
+
+/* Style pour la scrollbar sur Webkit (Chrome, Edge, Safari) */
+.session-list::-webkit-scrollbar {
+  width: 6px;
+  /* Width of the scrollbar */
+}
+
+.session-list::-webkit-scrollbar-thumb {
+  background-color: white;
+  /* Color of the scrollbar thumb */
+  border-radius: 5px;
+  /* Rounded corners */
+}
+
+.session-list::-webkit-scrollbar-track {
+  background: transparent;
+  /* Background of the scrollbar track */
+}
