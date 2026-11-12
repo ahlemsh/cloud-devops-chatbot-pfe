@@ -1,0 +1,68 @@
+# ===========================
+# Secrets & credentials
+# ===========================
+.env
+.env.prod
+.env.local
+.env.*.local
+terraform/secrets.tfvars
+k8s/ansible/vars.yml
+k8s/ansible/vars.yaml
+kubeconfig*.json
+
+# ===========================
+# Dépendances
+# ===========================
+**/node_modules/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.pytest_cache/
+**/venv/
+**/.venv/
+
+# ===========================
+# Build & Coverage
+# ===========================
+**/coverage/
+chatbot-frontend/build/
+**/dist/
+
+# ===========================
+# Terraform
+# ===========================
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# ===========================
+# Index vectoriel FAISS
+# ===========================
+index.faiss
+index.pkl
+**/vector_store/
+**/uploads/
+
+# ===========================
+# Documents académiques & binaires
+# ===========================
+*.pdf
+*.xlsx
+*.docx
+*.pptx
+
+# ===========================
+# OS & IDE
+# ===========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# ===========================
+# Docker
+# ===========================
+*.tar
