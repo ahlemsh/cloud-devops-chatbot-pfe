@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-frontend
+  labels:
+    app: chatbot-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot-frontend
+  template:
+    metadata:
+      labels:
+        app: chatbot-frontend
+    spec:
+      imagePullSecrets:
+        - name: nexus-secret
+      containers:
+        - name: chatbot-frontend
+          image: 10.0.1.4:31082/chatbot-frontend:latest
+          ports:
+            - containerPort: 3000
