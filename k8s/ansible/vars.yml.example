@@ -1,0 +1,9 @@
+# Variables Ansible pour le déploiement du modèle IA
+# Copier ce fichier en vars.yml et remplir les valeurs
+
+nexus_url: https://your-nexus-registry/
+nexus_username: your_nexus_username
+nexus_password: your_nexus_password
+google_api_key: your_google_api_key
+groq_api_key: your_groq_api_key
+image_tag: latest
