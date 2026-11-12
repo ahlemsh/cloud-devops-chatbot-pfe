@@ -4,12 +4,6 @@
 
 ---
 
-## Ce projet en une phrase
-
-Un chatbot RAG (LLM + FAISS) pour l'entreprise RFC, **entièrement automatisé** de la qualité du code jusqu'au déploiement en production sur un cluster Kubernetes Azure, sans aucune action manuelle.
-
----
-
 ## Chaîne DevOps complète
 
 C'est le cœur du projet. Chaque push sur `main` déclenche deux pipelines Azure DevOps en séquence.
@@ -70,12 +64,11 @@ Azure Stack
 │   │   ├── Subnet MongoDB      (VM base de données)
 │   │   └── Subnet Public/DMZ
 │   │
-│   ├── 3 VMs Ubuntu 18.04
+├── 3 VMs Ubuntu 18.04
 │   │   ├── VM-Management
 │   │   ├── VM-IA               ← modèle Flask déployé via Ansible
 │   │   └── VM-MongoDB
 │   │
-│   ├── FortiGate               ← Firewall / NAT périmétrique
 │   ├── NSG + Route Tables      ← Règles réseau inbound/outbound
 │   └── NICs (IPs statiques)
 │
@@ -84,7 +77,7 @@ Azure Stack
     └── Deployment: chatbot-backend    (NodePort)
 ```
 
-**Fichiers Terraform :** `provider.tf` · `network.tf` · `vm.tf` · `nic.tf` · `security.tf` · `route_table.tf` · `fortigate.tf` · `variables.tf` · `outputs.tf`
+**Fichiers Terraform :** `provider.tf` · `network.tf` · `vm.tf` · `nic.tf` · `security.tf` · `route_table.tf` · `variables.tf` · `outputs.tf`
 
 ---
 
