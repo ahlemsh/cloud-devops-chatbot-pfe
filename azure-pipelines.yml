@@ -1,0 +1,85 @@
+pool:
+  name: Default
+  demands:
+    - agent.name -equals linux-agent-k8s-master
+
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: nexus-secrets-prod
+  - group: pipeline-variables
+
+stages:
+# === STAGE 1: DÉPLOIEMENT DES PODS FRONTEND & BACKEND ===
+- stage: DeployPods
+  displayName: "Deploy Pods"
+  jobs:
+    - job: kubectlApply
+      displayName: "Application des fichiers YAML"
+      pool:
+        name: Default
+        demands:
+          - agent.name -equals linux-agent-k8s-master
+      steps:
+        - task: DownloadSecureFile@1
+          name: kubeconfig
+          inputs:
+            secureFile: kubeconfig.dc2.json
+
+        - script: |
+            mkdir -p ~/.kube
+            cp $(kubeconfig.secureFilePath) ~/.kube/config
+          displayName: "Configurer kubeconfig (Linux)"
+
+        - checkout: self
+
+        - script: |
+            kubectl apply -f "$(Build.SourcesDirectory)/k8s/frontend/frontend-deployment.yaml"
+            kubectl apply -f "$(Build.SourcesDirectory)/k8s/frontend/frontend-service.yaml"
+            kubectl apply -f "$(Build.SourcesDirectory)/k8s/backend/backend-deployment.yaml"
+            kubectl apply -f "$(Build.SourcesDirectory)/k8s/backend/backend-service.yaml"
+          displayName: "Déployer les fichiers YAML de frontend et backend"
+
+# === STAGE 2: DÉPLOIEMENT DU MODÈLE IA VIA ANSIBLE ===
+- stage: DeployModelIA
+  displayName: "Deploy AI Model"
+  jobs:
+    - job: ansibleDeploy
+      displayName: "Configuration de la VM IA avec Ansible"
+      pool:
+        name: Default
+        demands:
+          - agent.name -equals linux-agent-k8s-master
+      steps:
+        - checkout: self
+
+        # Utiliser Python déjà installé (Python 3.10)
+        - script: |
+            python3.10 --version
+            pip3 install --upgrade pip
+          displayName: "Vérifier Python et mettre à jour pip"
+
+        - task: DownloadSecureFile@1
+          name: sshKey
+          inputs:
+            secureFile: id_rsa
+
+        - script: |
+            mkdir -p ~/.ssh
+            cp $(sshKey.secureFilePath) ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            echo -e "Host *\n    StrictHostKeyChecking no" > ~/.ssh/config
+          displayName: "Configurer la clé SSH (Linux)"
+
+        - script: |
+            pip3 install ansible
+            export ANSIBLE_HOST_KEY_CHECKING=False
+            ansible-playbook "$(Build.SourcesDirectory)/k8s/ansible/ai-model.yaml" \
+              -i "$(Build.SourcesDirectory)/k8s/ansible/inventory.ini" \
+              --extra-vars "@$(Build.SourcesDirectory)/k8s/ansible/vars.yml" \
+              --extra-vars "nexus_username=$(NEXUS_USERNAME) nexus_password=$(NEXUS_PASSWORD) \
+              google_api_key=$(GOOGLE_API_KEY) groq_api_key=$(GROQ_API_KEY)"
+          displayName: "Déployer le modèle IA avec Ansible"
