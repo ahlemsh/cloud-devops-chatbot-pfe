@@ -1,0 +1,30 @@
+# Exclure les fichiers de test
+test_app.py
+__pyache__/
+.pytest_cache/
+
+# Exclure les fichiers et dossiers de compilation Python
+_pycache_/
+*.pyc
+*.pyo
+*.pyd
+
+# Exclure les fichiers système inutiles
+.DS_Store
+Thumbs.db
+
+# Exclure les fichiers de configuration de versionning
+.git/
+.gitignore
+
+# Exclure les fichiers logs
+*.log
+logs/
+debug.log
+
+# Exclure les dossiers contenant des fichiers volumineux ou temporaires
+data/
+*.csv
+*.tsv
+*.json
+*.sqlite
