@@ -1,41 +1,121 @@
 # cloud-devops-chatbot-pfe
 
-> Chatbot d'entreprise basé sur RAG (Retrieval-Augmented Generation), déployé sur Azure Stack via une chaîne DevOps complète : CI/CD Azure DevOps, Kubernetes, Terraform et Ansible.
-
-Projet de Fin d'Études — Architecture microservices cloud-native.
+> Projet de Fin d'Études — Déploiement cloud-native d'un chatbot d'entreprise sur **Azure Stack** avec une chaîne DevOps complète : **Azure DevOps CI/CD · Kubernetes · Terraform · Ansible · Docker · SonarQube · Trivy · Nexus**.
 
 ---
 
-## Architecture
+## Ce projet en une phrase
+
+Un chatbot RAG (LLM + FAISS) pour l'entreprise RFC, **entièrement automatisé** de la qualité du code jusqu'au déploiement en production sur un cluster Kubernetes Azure, sans aucune action manuelle.
+
+---
+
+## Chaîne DevOps complète
+
+C'est le cœur du projet. Chaque push sur `main` déclenche deux pipelines Azure DevOps en séquence.
+
+### Pipeline CI — Qualité & Sécurité (`azure-pipelines-ci.yml`)
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        Utilisateur                          │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-         ┌────────────▼────────────┐
-         │   Frontend (React 19)   │
-         │   Service K8s NodePort  │
-         └────────────┬────────────┘
-                      │ HTTP
-         ┌────────────▼────────────┐
-         │  Backend (Node.js /     │
-         │  Express + MongoDB)     │
-         │  Service K8s NodePort   │
-         └────────────┬────────────┘
-                      │ HTTP
-         ┌────────────▼────────────┐
-         │  Modèle IA (Flask +     │
-         │  LangChain + LLama3)    │
-         │  Déployé sur VM dédiée  │
-         │  via Ansible            │
-         └─────────────────────────┘
+┌──────────────┐     ┌──────────────┐     ┌─────────────┐     ┌───────────┐     ┌─────────────┐
+│  Tests       │     │  Tests       │     │             │     │           │     │             │
+│  unitaires   │────►│  pytest      │────►│  SonarQube  │────►│   Trivy   │────►│    Nexus    │
+│  Jest +      │     │  Flask /     │     │  Analyse    │     │  Security │     │  Registry   │
+│  Supertest   │     │  Python      │     │  3 projets  │     │  scan     │     │  Push       │
+│  (Backend +  │     │  (Modèle IA) │     │             │     │  images   │     │  images     │
+│  Frontend)   │     │              │     │             │     │  Docker   │     │  Docker     │
+└──────────────┘     └──────────────┘     └─────────────┘     └───────────┘     └─────────────┘
+```
 
-Infrastructure Azure Stack
-├── AKS (frontend + backend)
-├── VM IA dédiée (modèle Flask + FAISS)
-├── VM MongoDB
-└── FortiGate (firewall / NAT)
+**Détail des étapes :**
+- **Tests Jest + Supertest** : tests unitaires et d'intégration du backend Node.js (mongodb-memory-server)
+- **Tests React Testing Library** : tous les composants frontend couverts
+- **Tests pytest** : endpoints Flask (upload, chat, edge cases)
+- **SonarQube** : analyse statique sur 3 projets séparés (backend, frontend, modèle IA) — couverture, bugs, code smells
+- **Trivy** : scan de vulnérabilités CVE sur les 3 images Docker avant tout push
+- **Nexus Repository** : registre Docker privé, les images taguées et validées sont poussées ici
+
+### Pipeline CD — Déploiement (`azure-pipelines.yml`)
+
+```
+┌─────────────────────────┐          ┌──────────────────────────┐
+│                         │          │                          │
+│   kubectl apply         │          │   Ansible Playbook       │
+│                         │          │                          │
+│   k8s/backend/          │          │   Déploiement modèle IA  │
+│   k8s/frontend/         │──────────│   sur VM dédiée          │
+│                         │          │   (10.0.4.4)             │
+│   AKS — Azure Stack     │          │   Docker pull Nexus      │
+│                         │          │   + run Flask container  │
+└─────────────────────────┘          └──────────────────────────┘
+```
+
+**Pas de déploiement manuel.** Le pipeline gère tout : apply des manifestes K8s, pull des images depuis Nexus, et provisioning du service IA via Ansible.
+
+---
+
+## Infrastructure Cloud (Azure Stack + Terraform)
+
+L'infrastructure complète est définie en **Infrastructure as Code** avec Terraform (`provider azurestack`).
+
+```
+Azure Stack
+│
+├── Resource Group
+│   │
+│   ├── VNet  10.0.0.0/16
+│   │   ├── Subnet AKS          (frontend + backend Deployments K8s)
+│   │   ├── Subnet Management   (VM gestion)
+│   │   ├── Subnet IA           (VM modèle Flask + FAISS)
+│   │   ├── Subnet MongoDB      (VM base de données)
+│   │   └── Subnet Public/DMZ
+│   │
+│   ├── 3 VMs Ubuntu 18.04
+│   │   ├── VM-Management
+│   │   ├── VM-IA               ← modèle Flask déployé via Ansible
+│   │   └── VM-MongoDB
+│   │
+│   ├── FortiGate               ← Firewall / NAT périmétrique
+│   ├── NSG + Route Tables      ← Règles réseau inbound/outbound
+│   └── NICs (IPs statiques)
+│
+└── AKS Cluster
+    ├── Deployment: chatbot-frontend   (NodePort)
+    └── Deployment: chatbot-backend    (NodePort)
+```
+
+**Fichiers Terraform :** `provider.tf` · `network.tf` · `vm.tf` · `nic.tf` · `security.tf` · `route_table.tf` · `fortigate.tf` · `variables.tf` · `outputs.tf`
+
+---
+
+## Architecture Applicative
+
+```
+Utilisateur
+    │
+    ▼
+┌─────────────────────┐
+│  React 19 (Frontend)│  ← Kubernetes Deployment (AKS)
+│  Sidebar · Sessions │
+│  Chat UI · FAQ      │
+└──────────┬──────────┘
+           │ HTTP / Axios
+           ▼
+┌─────────────────────┐
+│  Node.js / Express  │  ← Kubernetes Deployment (AKS)
+│  Backend + MongoDB  │
+│  Sessions UUID · NLP│
+│  Prometheus /metrics│
+└──────────┬──────────┘
+           │ HTTP
+           ▼
+┌─────────────────────┐
+│  Flask + LangChain  │  ← VM dédiée (Ansible)
+│  LLama3-70b (Groq)  │
+│  FAISS vectorstore  │
+│  Google AI Embeddings│
+│  Prometheus /metrics│
+└─────────────────────┘
 ```
 
 ---
@@ -43,34 +123,32 @@ Infrastructure Azure Stack
 ## Stack Technique
 
 ### Application
-| Composant | Technologies |
-|-----------|-------------|
+| Couche | Technologies |
+|--------|-------------|
 | Frontend | React 19, Axios, React Testing Library, Cypress |
-| Backend | Node.js, Express 4, MongoDB, Mongoose, UUID |
-| Modèle IA | Python, Flask, LangChain, LLama3-70b (Groq), FAISS, Google Generative AI |
-| Monitoring | Prometheus (`prom-client`, `prometheus_flask_exporter`) |
+| Backend | Node.js, Express 4, MongoDB, Mongoose, UUID, `natural`, `stopword` |
+| Modèle IA | Python 3.9, Flask, LangChain, LLama3-70b-8192 (Groq), FAISS, Google Generative AI |
+| Monitoring | Prometheus — `prom-client` (Node.js) + `prometheus_flask_exporter` (Flask) |
 
-### DevOps & Infrastructure
-| Composant | Technologies |
-|-----------|-------------|
-| Conteneurisation | Docker (multi-stage builds) |
-| Orchestration | Kubernetes (AKS — Azure Stack) |
-| IaC | Terraform (provider `azurestack`) |
-| Configuration | Ansible |
-| CI/CD | Azure DevOps Pipelines |
-| Qualité code | SonarQube (3 projets) |
-| Sécurité images | Trivy |
-| Registry | Nexus Repository |
+### DevOps & Cloud
+| Outil | Rôle |
+|-------|------|
+| **Azure DevOps** | Orchestration CI/CD — 2 pipelines (CI + CD) |
+| **Docker** | Multi-stage builds — 3 images (Node 18 Alpine, Python 3.9 slim) |
+| **Kubernetes** | Orchestration conteneurs — AKS sur Azure Stack |
+| **Terraform** | IaC — réseau, VMs, sécurité Azure Stack |
+| **Ansible** | Configuration management — déploiement VM IA |
+| **SonarQube** | Analyse statique qualité — 3 projets |
+| **Trivy** | Scan CVE images Docker |
+| **Nexus** | Registry Docker privé |
 
 ---
 
-## Fonctionnalités
+## Fonctionnalités du Chatbot
 
-- **Base de connaissance** : chargement d'un fichier texte via `/upload`, découpage en chunks, génération d'embeddings (Google AI) et stockage dans FAISS
-- **RAG conversationnel** : retriever FAISS + historique de conversation + LLama3-70b via Groq
-- **Gestion des sessions** : sessions UUID persistées dans MongoDB, nommées automatiquement par extraction NLP (mots-clés avec `natural` + `stopword`)
-- **Interface utilisateur** : sidebar avec FAQ, historique des sessions, indicateur de frappe animé, suppression de session, bouton "New Chat"
-- **Métriques** : endpoints `/metrics` sur backend et modèle pour Prometheus
+- **RAG** : embeddings Google AI → stockage FAISS → retrieval LLama3-70b (Groq) avec historique de conversation
+- **Sessions persistantes** : UUID stockés dans MongoDB, nommées automatiquement par NLP (extraction mots-clés)
+- **Interface** : sidebar sessions, FAQ intégrée, indicateur de frappe, suppression de session
 
 ---
 
@@ -79,164 +157,74 @@ Infrastructure Azure Stack
 ```
 cloud-devops-chatbot-pfe/
 ├── chatbot-backend/          # API Node.js + Express + MongoDB
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── tests/
-│   └── Dockerfile
-├── chatbot-frontend/         # Interface React
-│   ├── src/
-│   │   ├── components/
-│   │   └── tests/
-│   └── Dockerfile
-├── chatbot-model/            # Serveur Flask + LangChain + FAISS
-│   ├── app.py
-│   ├── test_app.py
-│   ├── requirements.txt
-│   └── Dockerfile
-├── k8s/                      # Manifestes Kubernetes + Ansible
-│   ├── backend/
-│   ├── frontend/
-│   └── ansible/
-├── terraform/                # Infrastructure Azure Stack (IaC)
-├── azure-pipelines.yml       # Pipeline CD : K8s + Ansible deploy
-├── azure-pipelines-ci.yml    # Pipeline CI : tests + SonarQube + Trivy + Nexus
+├── chatbot-frontend/         # Interface React 19
+├── chatbot-model/            # Flask + LangChain + FAISS (RAG)
+├── k8s/
+│   ├── backend/              # Deployment + Service K8s backend
+│   ├── frontend/             # Deployment + Service K8s frontend
+│   └── ansible/              # Playbook déploiement VM IA
+├── terraform/                # IaC Azure Stack complet
+├── azure-pipelines-ci.yml    # Pipeline CI : tests → SonarQube → Trivy → Nexus
+├── azure-pipelines.yml       # Pipeline CD : K8s apply + Ansible deploy
 └── rfc.txt                   # Base de connaissance du chatbot
 ```
 
 ---
 
-## Prérequis
+## Lancer le projet localement
 
-- Node.js 18+
-- Python 3.9+
-- MongoDB (local ou Atlas)
-- Docker
-- Clés API : [Google Generative AI](https://aistudio.google.com/) et [Groq](https://console.groq.com/)
-
----
-
-## Installation locale
-
-### 1. Cloner le repo
+### Prérequis
+- Node.js 18+, Python 3.9+, MongoDB, Docker
+- Clés API : [Google Generative AI](https://aistudio.google.com/) · [Groq](https://console.groq.com/)
 
 ```bash
-git clone https://github.com/<your-username>/cloud-devops-chatbot-pfe.git
-cd cloud-devops-chatbot-pfe
-```
-
-### 2. Modèle IA (Flask)
-
-```bash
-cd chatbot-model
-python -m venv venv
-source venv/bin/activate      # Windows : venv\Scripts\activate
+# Modèle IA
+cd chatbot-model && python -m venv venv && venv\Scripts\activate
 pip install -r requirements.txt
-
-cp .env.example .env          # Remplir GOOGLE_API_KEY et GROQ_API_KEY
+cp .env.example .env   # remplir GOOGLE_API_KEY et GROQ_API_KEY
 python app.py
-```
 
-### 3. Backend (Node.js)
+# Backend
+cd chatbot-backend && npm install
+cp .env.example .env   # remplir MONGO_URI et FLASK_API_URL
+npm start
 
-```bash
-cd chatbot-backend
-npm install
-
-cp .env.example .env          # Remplir MONGO_URI et FLASK_API_URL
+# Frontend
+cd chatbot-frontend && npm install
+cp .env.example .env   # remplir REACT_APP_BACKEND_URL
 npm start
 ```
 
-### 4. Frontend (React)
-
-```bash
-cd chatbot-frontend
-npm install
-
-cp .env.example .env          # Remplir REACT_APP_BACKEND_URL
-npm start
-```
-
----
-
-## Lancement avec Docker
-
-```bash
-# Construire les images
-docker build -t chatbot-model ./chatbot-model
-docker build -t chatbot-backend ./chatbot-backend
-docker build -t chatbot-frontend ./chatbot-frontend
-
-# Lancer
-docker run -p 5000:5000 --env-file chatbot-model/.env chatbot-model
-docker run -p 3000:3000 --env-file chatbot-backend/.env chatbot-backend
-docker run -p 80:3000 chatbot-frontend
-```
-
----
-
-## Variables d'Environnement
-
-Chaque service dispose d'un fichier `.env.example` à copier en `.env` :
+### Variables d'environnement
 
 | Service | Variable | Description |
 |---------|----------|-------------|
-| `chatbot-model` | `GOOGLE_API_KEY` | Clé API Google Generative AI (embeddings) |
-| `chatbot-model` | `GROQ_API_KEY` | Clé API Groq (LLama3-70b-8192) |
-| `chatbot-model` | `FLASK_DEBUG` | Mode debug Flask (`True` / `False`) |
-| `chatbot-backend` | `MONGO_URI` | URI de connexion MongoDB |
-| `chatbot-backend` | `FLASK_API_URL` | URL du service modèle IA |
-| `chatbot-frontend` | `REACT_APP_BACKEND_URL` | URL du backend Node.js |
-
----
-
-## Pipeline CI/CD
-
-### Pipeline CI (`azure-pipelines-ci.yml`)
-
-```
-Tests unitaires          Tests pytest
-(Jest + Supertest)  ───► (Flask/Python)  ───► SonarQube ───► Trivy ───► Push Nexus
-  Backend + Frontend         Modèle IA       Analyse qualité  Scan sécu   Registry
-```
-
-### Pipeline CD (`azure-pipelines.yml`)
-
-```
-kubectl apply ──► Ansible deploy
-  K8s manifests     VM IA (modèle Flask)
-```
+| `chatbot-model` | `GOOGLE_API_KEY` | Embeddings Google Generative AI |
+| `chatbot-model` | `GROQ_API_KEY` | LLM LLama3-70b via Groq |
+| `chatbot-backend` | `MONGO_URI` | Connexion MongoDB |
+| `chatbot-backend` | `FLASK_API_URL` | URL service modèle IA |
+| `chatbot-frontend` | `REACT_APP_BACKEND_URL` | URL backend Node.js |
 
 ---
 
 ## Tests
 
 ```bash
-# Backend
-cd chatbot-backend && npm test
-
-# Frontend
-cd chatbot-frontend && npm test -- --watchAll=false
-
-# Modèle IA
-cd chatbot-model && pytest test_app.py -v
+cd chatbot-backend  && npm test                        # Jest + Supertest
+cd chatbot-frontend && npm test -- --watchAll=false    # React Testing Library
+cd chatbot-model    && pytest test_app.py -v           # pytest
 ```
 
 ---
 
-## Infrastructure (Terraform)
-
-L'infrastructure Azure Stack est définie dans `terraform/` :
-- **Réseau** : VNet `10.0.0.0/16`, 6 sous-réseaux (AKS, gestion, IA, public, private)
-- **VMs** : 3 VMs Ubuntu 18.04 (gestion, IA, MongoDB)
-- **Sécurité** : NSG, route tables, FortiGate (firewall/NAT)
+## Infrastructure Terraform
 
 ```bash
 cd terraform
 terraform init
-terraform plan -var-file="secrets.tfvars"   # secrets.tfvars non commité
+terraform plan  -var-file="secrets.tfvars"
 terraform apply -var-file="secrets.tfvars"
+# secrets.tfvars n'est pas commité — variables gérées via Azure DevOps pipeline
 ```
 
 ---
