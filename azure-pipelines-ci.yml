@@ -1,0 +1,300 @@
+pool:
+  name: Default
+
+variables:
+  - group: sonarqube-token
+  - group: pipeline-variables
+  - group: nexus-variables
+
+# ============================ TESTS ============================
+
+stages:
+
+- stage: FrontendTests
+  displayName: "Tests unitaires - Frontend"
+  jobs:
+    - job: FrontendTest
+      steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: "18.20.6"
+          displayName: "Installer Node.js"
+
+        - script: |
+            cd chatbot-frontend
+            npm install
+          displayName: "Installer les dépendances frontend"
+
+        - script: |
+            cd chatbot-frontend
+            set CI=true
+            npm test
+          displayName: "Exécuter les tests unitaires frontend"
+
+- stage: BackendTests
+  displayName: "Tests unitaires & intégration - Backend"
+  jobs:
+    - job: BackendTest
+      steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: "18.20.6"
+          displayName: "Installer Node.js"
+
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: "3.10"
+          env:
+            GITHUB_TOKEN: $(GITHUB_TOKEN) 
+          displayName: "Configurer Python"
+
+        - script: |
+            cd chatbot-backend
+            set NODE_ENV=test
+            npm install
+          displayName: "Installer les dépendances backend"
+
+        - script: |
+            cd chatbot-model
+            pip install -r requirements.txt
+            powershell -Command "Start-Process -NoNewWindow python 'app.py'; Start-Sleep -Seconds 10"
+          displayName: "Démarrer le serveur Flask"
+
+        - script: |
+            cd chatbot-backend
+            npm test
+          displayName: "Exécuter les tests backend"
+
+- stage: ModelTests
+  displayName: "Tests - Modèle IA"
+  jobs:
+    - job: ModelTest
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: "3.10"
+          env:
+            GITHUB_TOKEN: $(GITHUB_TOKEN)  
+          displayName: "Configurer Python"
+
+        - script: |
+            cd chatbot-model
+            pip install -r requirements.txt
+          displayName: "Installer les dépendances modèle"
+
+        - script: |
+            pytest chatbot-model/test_app.py --maxfail=5 --disable-warnings --tb=short
+          env:
+            GOOGLE_API_KEY: $(GOOGLE_API_KEY)
+            GROQ_API_KEY: $(GROQ_API_KEY)
+          displayName: "Exécuter les tests Pytest sur le modèle IA"
+
+# ============================ SONARQUBE ============================
+
+- stage: FrontendSonarQube
+  displayName: "Analyse SonarQube - Frontend"
+  jobs:
+    - job: FrontendSonar
+      steps:
+        - script: |
+            cd chatbot-frontend
+            npm install
+            CI=true npm test -- --coverage
+          displayName: "Tests frontend"
+
+        - task: SonarQubePrepare@5
+          inputs:
+            SonarQube: "SonarQubeLocal"
+            scannerMode: "CLI"
+            configMode: "manual"
+            cliProjectKey: "chatbot-frontend"
+            cliProjectName: "Chatbot Frontend"
+            cliSources: "chatbot-frontend"
+            extraProperties: |
+              sonar.exclusions=**/coverage/lcov-report/**,**/src/tests/**
+              sonar.coverage.exclusions=chatbot-frontend/src/index.js,chatbot-frontend/src/reportWebVitals.js,chatbot-frontend/src/App.js
+              sonar.javascript.lcov.reportPaths=chatbot-frontend/coverage/lcov.info
+          displayName: "Préparer SonarQube - Frontend"
+
+        - task: SonarQubeAnalyze@5
+          displayName: "Analyser le frontend"
+
+        - task: SonarQubePublish@5
+          inputs:
+            pollingTimeoutSec: "300"
+          displayName: "Publier les résultats - Frontend"
+
+- stage: BackendSonarQube
+  displayName: "Analyse SonarQube - Backend"
+  jobs:
+    - job: BackendSonar
+      steps:
+        - script: |
+            cd chatbot-backend
+            npm install
+            npm test -- --coverage
+          displayName: "Tests backend"
+
+        - task: SonarQubePrepare@5
+          inputs:
+            SonarQube: "SonarQubeLocal"
+            scannerMode: "CLI"
+            configMode: "manual"
+            cliProjectKey: "chatbot-backend"
+            cliProjectName: "Chatbot Backend"
+            cliSources: "chatbot-backend"
+            extraProperties: |
+              sonar.exclusions=**/coverage/lcov-report/**,**/tests/**
+              sonar.coverage.exclusions=chatbot-backend/server.js
+              sonar.javascript.lcov.reportPaths=chatbot-backend/coverage/lcov.info
+          displayName: "Préparer SonarQube - Backend"
+
+        - task: SonarQubeAnalyze@5
+          displayName: "Analyser le backend"
+
+        - task: SonarQubePublish@5
+          inputs:
+            pollingTimeoutSec: "300"
+          displayName: "Publier les résultats - Backend"
+
+- stage: ModelSonarQube
+  displayName: "Analyse SonarQube - Modèle IA"
+  jobs:
+    - job: ModelSonar
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: "3.10"
+          env:
+            GITHUB_TOKEN: $(GITHUB_TOKEN)  
+          displayName: "Configurer Python"
+
+        - script: |
+            cd chatbot-model
+            pip install -r requirements.txt
+            pip install pytest-cov
+            python -m pytest --cov=. --cov-report=xml
+          env:
+            GOOGLE_API_KEY: $(GOOGLE_API_KEY)
+            GROQ_API_KEY: $(GROQ_API_KEY)
+          displayName: "Tests modèle IA"
+
+        - task: SonarQubePrepare@5
+          inputs:
+            SonarQube: "SonarQubeLocal"
+            scannerMode: "CLI"
+            configMode: "manual"
+            cliProjectKey: "chatbot-model"
+            cliProjectName: "Chatbot IA Model"
+            cliSources: "chatbot-model"
+            extraProperties: |
+              sonar.coverage.exclusions=chatbot-model/test_app.py
+              sonar.python.coverage.reportPaths=chatbot-model/coverage.xml
+          displayName: "Préparer SonarQube - Modèle"
+
+        - task: SonarQubeAnalyze@5
+          displayName: "Analyser le modèle IA"
+
+        - task: SonarQubePublish@5
+          inputs:
+            pollingTimeoutSec: "300"
+          displayName: "Publier les résultats - Modèle"
+
+# ============================ TRIVY ============================
+
+- stage: TrivyScanBackend
+  displayName: "Trivy - Scan Backend"
+  jobs:
+    - job: ScanBackend
+      steps:
+
+        - script: |
+            curl -L -o "$(Build.ArtifactStagingDirectory)\7zip_installer.exe" https://www.7-zip.org/a/7z1900-x64.exe
+            powershell -Command "& '$(Build.ArtifactStagingDirectory)\7zip_installer.exe' /S"
+          displayName: 'Installer 7zip'
+
+        - script: |
+            curl -L -o "$(Build.ArtifactStagingDirectory)\trivy.zip" https://github.com/aquasecurity/trivy/releases/download/v0.61.0/trivy_0.61.0_windows-64bit.zip
+          displayName: 'Télécharger Trivy'
+
+        - script: |
+            "C:\Program Files\7-Zip\7z.exe" x "$(Build.ArtifactStagingDirectory)\trivy.zip" -o"$(Build.ArtifactStagingDirectory)\tools"
+          displayName: 'Extraire Trivy'
+
+        - task: Docker@2
+          inputs:
+            command: 'build'
+            repository: 'chatbot-backend'
+            dockerfile: 'chatbot-backend\Dockerfile'
+            tags: '$(Build.BuildId)'
+          displayName: 'Build Docker image - Backend'
+
+        - script: |
+            trivy image --no-progress chatbot-backend:$(Build.BuildId)
+          displayName: 'Scan Backend avec Trivy'
+
+- stage: TrivyScanFrontend
+  displayName: "Trivy - Scan Frontend"
+  jobs:
+    - job: ScanFrontend
+      steps:
+        - task: Docker@2
+          inputs:
+            command: 'build'
+            repository: 'chatbot-frontend'
+            dockerfile: 'chatbot-frontend\Dockerfile'
+            tags: '$(Build.BuildId)'
+          displayName: 'Build Docker image - Frontend'
+
+        - script: |
+            trivy image --no-progress chatbot-frontend:$(Build.BuildId)
+          displayName: 'Scan Frontend avec Trivy'
+
+- stage: TrivyScanModel
+  displayName: "Trivy - Scan Modèle IA"
+  jobs:
+    - job: ScanModel
+      steps:
+        - task: Docker@2
+          inputs:
+            command: 'build'
+            repository: 'chatbot-model'
+            dockerfile: 'chatbot-model\Dockerfile'
+            tags: '$(Build.BuildId)'
+          displayName: 'Build Docker image - Modèle'
+
+        - script: |
+            trivy image --no-progress chatbot-model:$(Build.BuildId)
+          displayName: 'Scan Modèle IA avec Trivy'
+
+# ============================ Nexus ============================
+
+- stage: DockerPush
+  displayName: "Push des images vers Nexus Repository"
+  dependsOn:
+    - TrivyScanBackend
+    - TrivyScanFrontend
+    - TrivyScanModel
+  condition: succeeded()
+  jobs:
+    - job: PushToNexus
+      displayName: "Push des images Docker vers Nexus"
+      steps:
+        - script: |
+            echo $(NEXUS_PASSWORD) | docker login localhost:8082 -u $(NEXUS_USERNAME) --password-stdin
+          displayName: "Connexion à Nexus via Docker"
+
+        - script: |
+            docker tag chatbot-backend:$(Build.BuildId) localhost:8082/chatbot-backend:$(Build.BuildId)
+            docker push localhost:8082/chatbot-backend:$(Build.BuildId)
+          displayName: "Push chatbot-backend vers Nexus"
+
+        - script: |
+            docker tag chatbot-frontend:$(Build.BuildId) localhost:8082/chatbot-frontend:$(Build.BuildId)
+            docker push localhost:8082/chatbot-frontend:$(Build.BuildId)
+          displayName: "Push chatbot-frontend vers Nexus"
+
+        - script: |
+            docker tag chatbot-model:$(Build.BuildId) localhost:8082/chatbot-model:$(Build.BuildId)
+            docker push localhost:8082/chatbot-model:$(Build.BuildId)
+          displayName: "Push chatbot-model vers Nexus"
