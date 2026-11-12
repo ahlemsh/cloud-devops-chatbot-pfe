@@ -1,0 +1,322 @@
+
+1. Présentation RFC: + 3K Tickets résolus par an, + 254 Projets, + 2 M € Économisé par ans par client, + 200 Clients satisfaits
+
+
+RFC (Réseaux, Formation et Conseil) est une société d’ingénierie informatique Tunisienne créée en 2003, dotée d’un haut niveau d’expertise sur les solutions les plus avancées d’infrastructure. 
+RFC est leader depuis plus que 20 ans dans le secteur des intégrateurs IT, fournisseurs des solutions IT et des services Cloud à forte valeur ajoutée. 
+
+
+2. Mission de RFC : 
+
+
+RFC a pour vocation de vous offrir le meilleur du service et de conseil pour vous aider dans la réalisation de vos projets et de vos intégrations.
+Pour réussir, RFC se base sur les compétences de ses ingénieurs et consultants certifiés, sur le grand respect des engagements pris avec ses clients et ses partenaires et la volonté de conserver des relations fortes avec ses clients. 
+
+RFC aide ses clients à gagner en agilité, en sécurité et à réduire leurs coûts informatiques grâce à des solutions technologiques adaptées aux évolutions digitales. 
+
+Elle assure :
+✔ La modernisation des espaces de travail
+✔ Le déploiement et la modernisation des infrastructures
+✔ L’optimisation des architectures
+✔ La sécurisation des données
+✔ La mise en place et l’automatisation des processus pour les rendre évolutifs et orchestrés sur des clouds publics, privés et hybrides.
+
+
+
+3. Domaine d’expertise et services proposées par RFC :
+
+3.1 Déploiement des solutions :
+
+
+
+Les services de RFC reposent sur 4 entités structurées en pôles d’activités dont la vocation est de répondre de façon pertinente et efficace à chaque besoin spécifique : 
+
+• Networking & Security  
+• Data Center & Cloud 
+• Data & Business Application
+• Identity & Modern Workplace 
+
+L’équipe consultants de RFC certifiés sur plusieurs technologies se distingue par une maitrise et une qualité de service qui la positionne parmi les leaders sur le marché. Avec des architectes possédant non seulement l’expertise mais aussi l’expérience RFC peut garantir la réussite des projets de ses clients. 
+
+3.2 Conseil :
+
+L'activité de conseil de RFC se base avant tout sur une mission d'étude de projets 
+informatiques, indispensable pour : 
+• Identifier et comprendre le besoin des clients. 
+• Qualifier l'environnement du client : documenter l'existant, définir et évaluer le projet. 
+• Proposer des scénarios d'architectures et aider les clients à faire les meilleurs choix .
+• Réaliser une plateforme de test et des maquettes de démonstration  
+• Etablir le budget moyen de la solution (matériels, logiciels, services) 
+• Assurer un accompagnement des clients, d’orientation des choix pour les aider à prendre la meilleure décision et pour créer une véritable relation de partenariats et de confiance. 
+
+3.3 Support :
+
+Par l'écoute, la disponibilité et une grande flexibilité RFC assure grâce à son équipe du support technique un traitement immédiat les réclamations de ses clients. Ils bénéficient selon le type de contrat choisi, d'un support direct de leurs utilisateurs ou d'un accompagnement de leur équipe informatique, à la prise en main à distance via une assistance téléphonique ou bien à travers un accès distant au réseau du client via une connexion sécurisée jusqu'à l'intervention sur site. La disponibilité et l'expertise 
+sont les atouts de RFC pour réussir le métier de support.
+3.4 Formation 
+RFC, certifiée MCPLS (Microsoft Certified Partner For Learning Solutions), délivre des 
+formations basées sur des supports de cours originaux de Microsoft. 
+Les formations de RFC sont assurées par des formateurs consultants confirmés 
+techniquement grâce aux certifications et compétences techniques acquises durant des années d’expériences ainsi qu’aux processus de certification et d’amélioration continue, avec des 
+compétences pédagogiques prouvées par des certifications MCT (Microsoft Certified 
+Trainer).  
+En tant que PVTC (Pearson Vue Authorized Testing Center), RFC offre un programme 
+de certification permettant aux candidats de valider leurs expertises dans les technologies Microsoft, IBM, Cisco Oracle, Java…
+
+
+4. Année des création de RFC :
+
+
+Dès sa création en 2003, RFC n'a cessé d'investir dans ses ressources en formation et certification, afin de disposer d'une équipe compétente, qualifiée et spécialisée dans les technologies d'infrastructure avancée.
+
+5. Spécialité de RFC :
+
+
+RFC (Réseaux Formation et Conseil) est une entreprise spécialisée dans la formation, le conseil et les services liés aux réseaux et technologies de l'information. En tant que cloud provider et leader dans le doamine de l'inrégration de solutions Cloud de Azure dispose aujourd’hui de compétences et de savoir-faire uniques sur le marché tunisien, et ce en matière d’infrastructure, sécurité et conseil stratégique pour l’optimisation des infrastructures informatiques tout en intégrant des solutions selon une stratégie adaptée aux besoins de la demande de l’entreprise. Elle permet d’optimiser les infrastructures informatiques (forêts AD complexes, solutions de communication unifiée, solutions de sécurité, déploiement industrialisé de postes de travail, migration et administration d’infrastructures complexes...)
+
+Forte de ses 20 ans d'expérience, elle se distingue par son expertise et son engagement envers la qualité. Avec une équipe hautement qualifiés, RFC a obtenu plus de 200 certifications internationales attestant de son savoir-faire. Son professionnalisme et sa performance sont reflétés par un chiffre d'affaires annuel dépassant les 15 millions de dinars tunisiens (MDT), consolidant sa position parmi les leaders du secteur en Tunisie.
+
+
+6. Partenaires: Microsoft, Cisco, trendmicro, Fortinet, Pearson vue, commvault 
+
+Les choix de partenariats de RFC sont renforcés avec de grands leaders du Cloud 
+Computing tel que : Microsoft, Trend Micro, Fortinet et Cisco, ce qui l’amène à développer des compétences adaptées et des offres spécifiques pour accompagner ses clients sur le marché tunisien, pour se positionner clairement comme intégrateur hybride de référence.
+
+6.1 Microsoft :
+
+Fondée en 1975 la société Microsoft est une entreprise informatique spécialisée dans le développement de logiciels et de fabrication de produits à destination du grand public et des professionnels. Microsoft est principalement connu pour le système d'exploitation Windows. 
+La société a également conçu la suite bureautique Office 365 constituant un ensemble de logiciels de productivité dont les plus connus sont le traitement de texte Word, le tableur Excel, le gestionnaire de courriers électroniques Outlook, l'application de présentation PowerPoint ou encore la plateforme collaborative des réunions Teams. Ainsi que d’autres services à l’instar de Microsoft Edge, Skype, OneDrive, Microsoft Azure...
+En 2006, RFC a obtenu sa certification Microsoft Gold Certified Partner, ce qui 
+représente le plus haut niveau de partenariat avec Microsoft, qui démontre son expertise dans la mise en œuvre et l’intégration de solutions technologiques basées sur les systèmes Microsoft. 
+
+6.2 Cisco :
+
+Cisco Systems est une entreprise informatique américaine fondée en 1984 spécialisée, à 
+l’origine, dans le matériel réseau (routeurs et commutateurs Ethernet), et depuis 2009 dans les serveurs. Elle s'est depuis largement diversifiée dans les logiciels et notamment la cybersécurité. Cisco Systems est aujourd’hui le numéro un mondial de la conception, du développement et de la commercialisation d’équipements réseaux pour internet, constituant la majorité de son activité. 
+RFC est accréditée Advanced Datacenter Partner sur les technologies Cisco.
+
+6.3 TRENDMICRO :
+
+Trend Micro est une société japonaise créée en 1988 qui développe des logiciels de 
+sécurité pour les serveurs, les environnements de cloud computing ainsi que les petites et les moyennes entreprises. C’est un leader mondial dans la cybersécurité qui participe à rendre notre monde plus sûr pour l'échange d'informations numériques. Alimentée par des décennies de savoir-faire dans la sécurité, la recherche mondiale sur les menaces et l’innovation continue, la plateforme de cybersécurité de Trend Micro protège plus de 500 000organisations et plus de 250 millions de personnes dans les clouds, réseaux, appareils et endpoints. 
+En 2020, RFC a été reconnue Trend Micro GOLD Partner spécialement sur les solutions 
+de sécurité antivirales. 
+	
+6.4 FORTINET :
+
+RFC est partenaire avec Fortinet qui est une multinationale américaine créée en 2000. Elle conçoit et commercialise, entre autres, des logiciels, équipements et services de cybersécurité tels que des Firewall, VPN, anti-virus, anti-spam, détection d’intrusion, systèmes de prévention d’intrusion et de sécurité des terminaux. 
+Fortinet est l’une des leaders mondiaux du marché de l'UTM (Unified Threat 
+Management) avec ses boitiers de sécurité multifonctions qui couvre l’ensemble des exigences de sécurité du réseau et son architecture Fortinet Security Fabric, la seule qui peut offrir une sécurité sans compromis pour relever les défis les plus critiques en matière de sécurité, que ce soit pour les réseaux, les applications, le cloud ou les dispositifs mobiles. 
+
+6.5 PEARSON VUE :
+
+Pearson VUE fait partie de Pearson, la plus grande entreprise d'apprentissage au monde 
+choisie par plus de 450 propriétaires d'accréditation à travers le monde pour aider à gérer, distribuer et développer leurs programmes d'examen. Des examens pratiques en ligne, aux tests à grands enjeux et surveillés qui nécessitent des conditions d'examen des plus sécurisés de l'industrie, Pearson VUE est le leader des examens sur ordinateurs.  
+Certifiée en 2010 en tant que PVTC, Pearson VUE Authorized Test Center, RFC est 
+autorisée à délivrer des certifications incluses dans l’offre de Pearson VUE tel que les certifications Cisco Systems, Citrix Systems, Linux Professional Institute Testing. 
+
+6.6 Commvault: 
+
+Commvault est une société de logiciels de protection et de gestion des données fondée en 1996. Les logiciels de l’entreprise Commvault peuvent être utilisés pour la sauvegarde et la récupération des données, la gestion du cloud et de l’infrastructure et la conservation et la conformité. Elle est reconnue comme l'un des leaders sur le marché de la sauvegarde et de la restauration des centres de données. 
+Depuis 2015, RFC est partenaire stratégique de Commvault et elle est le seul partenaire de formation Commvault en Tunisie.
+
+7. Solution cloud adoptée :
+
+Le RFC propose une solution cloud à deux volets. La première est la partie du cloud classique où les données sont stockées et traitées par l’infrastructure de Microsoft. 
+La seconde est une plateforme hébergée sur le territoire tunisien, à Dataxion qui est le plus grand DataCenter en Afrique du Nord de type tier 3+ ce qui lui confère une disponibilité de 99,98%. Il s’agit de la première extension de Microsoft Azure en Tunisie, basée sur la solution Azure Stack de Microsoft et les technologies de centre de données de Cisco permettant aux entreprises d’exécuter des applications dans un environnement local à leurs propres conditions. 
+L’objectif de cette plateforme est non seulement de fournir aux entreprises clientes du marché du cloud public, privé et hybride un cloud de confiance en conservant leurs données sensibles en Tunisie, mais aussi de leur faire bénéficier un temps de réponse dix fois plus court, ce qui leur permet d’offrir des services plus réactifs grâce à la proximité de cette infrastructure. 
+
+7.1 Xpress Azure :
+
+RFC construit l’extension d’Xpress Azure en se basant sur la solution Azure Stack de Microsoft et sur les technologies Datacenter de Cisco. Avec cette nouvelle offre, RFC est capable d’enrichir son offre Cloud Hybride avec des services Microsoft Azure fournies depuis un Datacenter Tunisien dont Cisco est le partenaire de choix.  
+En résumé, Azure Stack Hub offre une solution hybride dont RFC a tiré avantage et a construit sa propre extension sous le nom d’Xpress Azure tout en répondant à ses propres besoins. 
+
+8. Organigramme de RFC :
+
+L'organigramme de RFC est structuré sous la direction du PDG, avec un COO (Chief Operating Officer) qui supervise trois grandes unités : Unité technico-commerciale, Centre d’expertise qui regroupe quatre départements : (Data Center & Cloud), (Identity & Modern Workplace), (Network & Security), (Data & Business Application et unité de gestion, qui comprend : Directeur de PMO, Responsable de la formation et Directeur Support Technique.
+
+Le directeur support technique supervise des spécialistes support technique, ingénieurs support technique et Helpdesks.
+
+9. Points fort de RFC : Son équipe qualifiée
+
+Le maintien du haut niveau d'expertise de rfc est assuré à la fois par une formation permanente de  équipe, un renouvellement régulier de leurs certifications et leur participation active aux programmes d'introduction des nouvelles technologies.Dès sa création, RFC n’a cessé d’investir dans ses ressources en formation et certification, afin de disposer d’une équipe compétente, qualifiée et spécialisée dans les technologies d’infrastructure avancée, et particulièrement les technologies Microsoft.
+
+10. Contact et réseaux sociaux de RFC :
+
+Pour toute information ou assistance, vous pouvez nous contacter via les canaux suivants :
+
+10.1 Réseaux sociaux :
+
+LinkedIn : https://www.linkedin.com/company/rfc_2/
+Facebook : https://www.facebook.com/share/1HDe9dUxbM/?mibextid=LQQJ4d
+Instagram : https://www.instagram.com/rfc__reseaux_formation_conseil?igsh=MWp6ZG5pdGJrNm5mMQ==
+
+10.2 Site web :
+www.rfc.com.tn
+
+10.3 Contact par e-mail :
+Service client : contact@rfc.com.tn
+
+10.4 Numéro de téléphone :
+Standard : +216 36 06 06 06
+
+10.5 Localisation
+
+RFC possède deux localisations distinctes.
+
+Adresse 1 : Immeuble Saâdi - Tours C/D - 4e étage, 1082 Tunis, Tunisie ​
+
+Adresse 2 : Centre Urbain R6V2+2C5, Tunis 4ème étage 
+
+
+11. Vision de RFC : 
+
+Être leader sur le marché local et challenger à l’international en tant que fournisseur de solutions cloud et services managés, tout en garantissant la qualité, la fiabilité et la confiance.
+
+12. Les Valeurs de RFC :
+
+12.1 Transparence :
+
+RFC prône la transparence en partageant instantanément l’information avec ses collaborateurs et partenaires.
+
+12.2 Simplicité : 
+
+La simplicité est la devise de RFC, mettant en avant son expertise et son savoir-faire au service de ses partenaires.
+
+12.3 Agilité :
+
+L’agilité est au cœur du fonctionnement de RFC, garantissant l’efficacité de ses démarches aussi bien en interne qu’en externe.
+
+
+13. Horaires de travail :
+
+Lun - Samedi : 08:00 AM - 06:00 PM
+
+14. RFC Learning Center : +10 ans d'expérience, +200 Certifications techniques, +20 Formateurs niveau Expert
+
+RFC Learning Center offre une expérience d'apprentissage de qualité dans les domaines de l'informatique et les meilleurs pratiques de la formation. Les principaux domaines de spécialisation comprennent le networking, la virtualisation, les Data Center et la collaboration avec les principaux partenaires: Microsoft, Commvault, Trend Micro, Fortinet et Cisco.
+
+Avec une vingtaine de formateurs expérimentés, +15 ans la moyenne d’expérience, RFC Learning Center livre des formations de qualité et accompagne ses clients et partenaires dans la politique de formation continue.
+
+15. Formations proposées par RFC Learning Center :
+
+15.1 Project Management :
+
+RFC Learning Center offre des formations officielles en Management de Projets, telles que la formation PMP, ainsi que des formations sur certains outils de pilotage comme MS Project et Agile-Scrum. Ces formations sont dispensées par des formateurs qualifiés et certifiés en management de projets.
+
+15.2 Soft Skills :
+Grâce à l’expérience de ses formateurs, RFC Learning Center propose des cycles de formation sur mesure, adaptés aux besoins des participants. Un diagnostic des besoins et des ateliers de travail sont organisés afin d’orienter les apprenants vers les formations les plus adaptées.
+
+15.3 Ressources Humaines :
+
+Les formations RH de RFC Learning Center privilégient l’action, le résultat et l’échange des bonnes pratiques RH. Elles couvrent des domaines clés tels que :
+
+Formation et développement
+Recrutement
+Évaluation des performances
+Gestion des rémunérations
+Gestion des talents et mobilité interne
+
+15.4 Bureautique :
+RFC Learning Center propose des formations sur mesure pour l’initiation et le perfectionnement des outils bureautiques, incluant :
+
+Word
+Excel
+PowerPoint
+Access
+
+RFC Learning Center est aujourd’hui reconnu comme l’un des leaders tunisiens dans la formation bureautique, grâce à des parcours de formation ajustés et adaptés à chacun.
+
+16. Les salles de formations de RFC :
+
+RFC Learning center propose 3 salles, richement équipées, indépendantes pour assurer toutes les sessions de formations en toute sérénité.
+
+16.1 Salle Cloud :
+Capacité : 10 places
+Équipement : 80%
+
+16.2 Salle Data :
+Capacité : 12 places
+Équipement : 100%
+
+16.3 Salle Apps :
+Capacité : 9 places
+Équipement : 60%
+
+
+17. Quelques formations :
+
+RFC Learning Center collabore avec des formateurs assez qualifiés afin d’assurer des sessions de formation Fortinet tel que Fortigate Security and Infrastructure, FortiManager, Fort Analyzer.
+
+RFC Learning Center est aussi partenaire Certiport qui vous permet de passer des certifications dans plusieurs technologies tel que : Microsoft Office Specialist (MOS), Microsoft Certfied Fundamentals, EC-Council, , Adobe Certified professional…
+
+18. Ce qui distingue RFC :
+
+18.1 Compétences techniques :
+
+RFC met à disposition une équipe polyvalente et experte dans plusieurs domaines (helpdesk, réseau, sécurité, cloud, messagerie, data center…). Ses collaborateurs sont certifiés, formés et expérimentés pour répondre aux exigences technologiques.
+
+18.3 Flexibilité :
+
+RFC conçoit des offres de support adaptées à la taille de chaque entreprise, en prenant en compte ses besoins et enjeux spécifiques.
+
+18.3 Efficience :
+
+Elle assure des interventions rapides et efficaces, en temps réel, pour garantir la continuité des services métiers et réduire au maximum les interruptions des services critiques.
+
+19. Fournisseur Cloud de RFC :
+
+RFC accélère la migration vers le Cloud sécurisé Azure Hybride
+Hébergement des données dans les datacenters de RFC en Tunisie ou chez Microsoft à travers le monde
+
+19.1 Xpress Cloud – Le Cloud Souverain de RFC en Tunisie :
+
+RFC propose une panoplie de services Azure modernes et une place de marché riche en solutions.
+
+19.2 Xpress Backup & Recovery de RFC :
+
+RFC offre un service de sauvegarde et réplication des données
+Duplication des données vers le cloud RFC pour assurer une reprise d’activité rapide en cas de sinistre.
+
+19.3 Xpress Storage de RFC :
+
+Solution de stockage cloud RFC pour sauvegardes, archives et vidéos de surveillance.
+
+19.4 Xpress Migrate de RFC : 
+
+Service d’évaluation des infrastructures permettant une migration optimisée et sécurisée vers le cloud RFC.
+
+
+20. Les solutions de RFC pour la transformation digitale :
+
+20.1 Cloud Hybride : 
+
+Une gestion unifiée des services cloud, quel que soit l’emplacement des données.
+
+20.2 Applications métier : 
+
+Performance et compatibilité avec les solutions des éditeurs partenaires de RFC.
+
+20.3 Hébergement web moderne : 
+
+Sécurité et élasticité assurées par les infrastructures de RFC.
+
+20.3 Microservices & DevOps : 
+
+Modernisation des applications via les solutions Kubernetes & DevOps de RFC.
+
+20.4 Continuité d’activité : 
+
+Solutions RFC de sauvegarde et reprise après sinistre.
+
+20.5 Entrepôts de données modernes : 
+
+Plateformes RFC optimisées pour Big Data et traitement rapide des données.
+
+21. Abbréviation de RFC :
+
+RFC (Réseaux, Formation et Conseil)
+
+
+
+
